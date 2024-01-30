@@ -147,6 +147,28 @@ public class Util {
 		return true;
 	}
 	
+	/**Loads a file's lines into a String[], skips blank lines, comments, trims lines, gz/zip OK*/
+	public static String[] loadFile(File file){
+		ArrayList<String> a = new ArrayList<String>();
+		try{
+			BufferedReader in = fetchBufferedReader(file);
+			String line;
+			while ((line = in.readLine())!=null){
+				line = line.trim();
+				if (line.startsWith("#") || line.length() == 0) continue;
+				a.add(line);
+			}
+			in.close();
+		}catch(Exception e){
+			System.out.println("Prob loadFile into String[]");
+			e.printStackTrace();
+			return null;
+		}
+		String[] strings = new String[a.size()];
+		a.toArray(strings);
+		return strings;
+	}
+	
 	/**Returns a String separated by the separator given an ArrayList of objects.*/
 	public static String arrayListToString(ArrayList al, String separator){
 		int len = al.size();

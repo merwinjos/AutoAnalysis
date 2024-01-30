@@ -1,0 +1,44 @@
+# Auto processing, alignment and QC, from GNomEx experiments
+
+# Jira ticket https://ri-jira.hci.utah.edu/projects/BSD/queues/custom/255/BSD-736
+
+# Confluence page on GNomEx db, https://ri-confluence.hci.utah.edu/pages/viewpage.action?pageId=38076459
+
+# Lots of files and scripts from pre covid in /home/BioApps/PipelineAutomator on hci-uinta
+
+# Test request https://hci-bio-app.hci.utah.edu/gnomex/?requestNumber=22680R
+
+# To do stuff without passwords between CHPC and HCI
+1) Login to hci-bio4.hci.utah.edu as yourself and sudo su to tomatosrvs
+ssh hci-bio4.hci.utah.edu
+sudo su tomatosrvs
+
+2) Now you can login to redwood2.chpc.utah.edu as hcipepipeline  pw: XXXXXX from hci-bio4
+ssh hcipepipeline@redwood2.chpc.utah.edu
+
+3) From redwood2 you can call out cmds to tomatosrvs@hci-bio4.hci.utah.edu via ssh w/o authentication!
+ssh tomatosrvs@hci-bio4.hci.utah.edu 'ls ~/; date; pwd'
+
+####### For testing the HCI GNomEx daemon
+# On laptop
+rsync -rPtL ~/Code/AutoAnalysis/target/AutoAnalysis-0.1-jar-with-dependencies.jar \
+  ~/Code/AutoAnalysis/ConfigNotes/autoAnalysis.* \
+  hci-deadhorse:/home/u0028003/ForAutoAnalysisDelme/
+# On Deadhorse ast tomatosrvs in /home/tomatosrvs/AutoAnalysis/Test
+cp /home/u0028003/ForAutoAnalysisDelme/* .
+nohup java -jar -Xmx1G AutoAnalysis-0.1-jar-with-dependencies.jar -l HCI -c autoAnalysis.config.txt &> daemon.log &
+tail -f daemon.log 
+
+####### For testing the CHPC daemon
+# On laptop
+rsync -rPtL ~/Code/AutoAnalysis/target/AutoAnalysis-0.1-jar-with-dependencies.jar \
+  ~/Code/AutoAnalysis/ConfigNotes/autoAnalysis.* \
+  kingspeak.chpc.utah.edu:/uufs/chpc.utah.edu/common/home/u0028003/ForAutoAnalysisDelme/
+# On redwood2 as hcipepipeline in /uufs/chpc.utah.edu/common/HIPAA/hcipepipeline/AutoAnalysis/Test
+scp  u0028003@kingspeak:/uufs/chpc.utah.edu/common/home/u0028003/ForAutoAnalysisDelme/* .
+nohup java -jar AutoAnalysis-0.1-jar-with-dependencies.jar -l CHPC -c autoAnalysis.config.txt &> daemon.log &
+tail -f daemon.log 
+
+### Medium test with 70 jobs from:
+Human - 21335R 22433R 22597R 22680R
+Mouse - 21337R 21393R 21411R 22509R 22643R 22659R 

@@ -1,0 +1,17 @@
+# Tab delimited AutoAnalysis Organism-LibraryKit : Workflow docs, use exact values from the GNomEx LIMs, case space identical			
+# Get Organisms from GNomEx Experiment Overview tab -> Organism			
+# Get Library Prep Kits from the  GNomEx Experiment Overview tab -> Library Protocol			
+# Organism	LibraryKit	Workflow Paths on RW , comma delimited, files and the contents of provided directories will be copied into each Job dir 	Extra MultiQC Options (e.g. --module cellranger  Or None)
+			
+D. melanogaster	Illumina TruSeq Stranded mRNA Library Preparation Kit with polyA selection		
+Human	Illumina TruSeq Stranded Total RNA Library Prep Ribo-Zero Gold (Human,Mouse,Rat)	/uufs/chpc.utah.edu/common/PE/hci-bioinformatics1/TNRunner/Workflows/RnaAlignQC/AutoAnalysis/Run/, /uufs/chpc.utah.edu/common/PE/hci-bioinformatics1/TNRunner/Workflows/RnaAlignQC/AutoAnalysis/Config/human_reverse_truseq_rnaAlignQC.yaml	None
+Mouse	Illumina TruSeq Stranded Total RNA Library Prep Ribo-Zero Gold (Human,Mouse,Rat)	/uufs/chpc.utah.edu/common/PE/hci-bioinformatics1/TNRunner/Workflows/RnaAlignQC/AutoAnalysis/Run/, /uufs/chpc.utah.edu/common/PE/hci-bioinformatics1/TNRunner/Workflows/RnaAlignQC/AutoAnalysis/Config/mouse_reverse_truseq_rnaAlignQC.yaml	None
+Zebrafish	Illumina TruSeq Stranded Total RNA Library Prep Ribo-Zero Gold (Human,Mouse,Rat)		
+			
+Human	NEBNext Ultra II Directional RNA Library Prep with poly(A) mRNA Isolation	/uufs/chpc.utah.edu/common/PE/hci-bioinformatics1/TNRunner/Workflows/RnaAlignQC/AutoAnalysis/Run/, /uufs/chpc.utah.edu/common/PE/hci-bioinformatics1/TNRunner/Workflows/RnaAlignQC/AutoAnalysis/Config/human_reverse_truseq_rnaAlignQC.yaml	None
+Mouse	NEBNext Ultra II Directional RNA Library Prep with poly(A) mRNA Isolation	/uufs/chpc.utah.edu/common/PE/hci-bioinformatics1/TNRunner/Workflows/RnaAlignQC/AutoAnalysis/Run/, /uufs/chpc.utah.edu/common/PE/hci-bioinformatics1/TNRunner/Workflows/RnaAlignQC/AutoAnalysis/Config/mouse_reverse_truseq_rnaAlignQC.yaml	None
+Marmoset	NEBNext Ultra II Directional RNA Library Prep with poly(A) mRNA Isolation		
+D. melanogaster	NEBNext Ultra II Directional RNA Library Prep with poly(A) mRNA Isolation		
+			
+Mouse	NEBNext Ultra II Directional RNA Library Prep with rRNA Depletion Kit (human,mouse,rat)	/uufs/chpc.utah.edu/common/PE/hci-bioinformatics1/TNRunner/Workflows/RnaAlignQC/AutoAnalysis/Run/, /uufs/chpc.utah.edu/common/PE/hci-bioinformatics1/TNRunner/Workflows/RnaAlignQC/AutoAnalysis/Config/mouse_reverse_truseq_rnaAlignQC.yaml	None
+Human	NEBNext Ultra II Directional RNA Library Prep with rRNA Depletion Kit (human,mouse,rat)	/uufs/chpc.utah.edu/common/PE/hci-bioinformatics1/TNRunner/Workflows/RnaAlignQC/AutoAnalysis/Run/, /uufs/chpc.utah.edu/common/PE/hci-bioinformatics1/TNRunner/Workflows/RnaAlignQC/AutoAnalysis/Config/human_reverse_truseq_rnaAlignQC.yaml	None

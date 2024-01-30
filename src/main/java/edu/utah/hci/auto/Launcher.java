@@ -58,11 +58,12 @@ public class Launcher {
 				"\nOptions:\n"+
 				"   -l Location running this jar file, either CHPC or HCI.\n"+
 				"   -c Path to the auto analysis configuration file.\n"+
+				"   -p Path to a file containing the pw for connecting to the GNomEx db.\n"+
 				"   -v Produce verbose debugging output.\n"+
 				"   -d Dry run, just print ssh and rsync cmds.\n"+
 				
 
-				"\nExample: java -jar AutoAnalysis.xxx.jar -l CHPC -c autoAnalysis.config.txt -v \n\n"+
+				"\nExample: java -jar AutoAnalysis.xxx.jar -l CHPC -c aa_config.txt -p cred.txt\n\n"+
 
 
 				"**************************************************************************************\n");

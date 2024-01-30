@@ -24,6 +24,7 @@ public class GNomExAutoAnalysis {
 
 	//config fields
 	private File configFile = null;
+	private File credentialFile = null;
 	private File supportedOrgLibWfConfigFile = null;
 	private String connectionUrl = null;
 	private HashMap<String, File> experimentalSubDirs = null;
@@ -344,6 +345,7 @@ Util.sendEmail(subject, adminEmail, sb.toString());
 				try{
 					switch (test){
 					case 'c': configFile = new File(args[++i]); break;
+					case 'p': credentialFile = new File(args[++i]); break;
 					case 'v': verbose = true; break;
 					case 'd': ; break;
 					case 'l': ; break;
@@ -359,13 +361,25 @@ Util.sendEmail(subject, adminEmail, sb.toString());
 		//pull config file, a simple key value file that skips anything with #, splits on tab
 		if (configFile == null || configFile.canRead() == false) Util.printErrAndExit("Error: please provide a path to the AutoAnalysis configuration file.\n");
 
+		//check for the credential file for GNomEx db, this contains just the pw, read only account
+		if (credentialFile == null || credentialFile.canRead() == false) Util.printErrAndExit("Error: please provide a path to your GNomEx db credential file.\n");
+
 		//load and check the configSettings
 		loadConfiguration();
 		
 		loadSupportedWorkflows();
+		
+		addRealPwToConnectionUrl();
 
 
 	}	
+
+	private void addRealPwToConnectionUrl() throws IOException {
+		String[] pwLines = Util.loadFile(credentialFile);
+		if (pwLines == null || pwLines.length!=1) throw new IOException ("Failed to find a single line in "+ credentialFile);
+		connectionUrl = connectionUrl.replace("XXXXXXXXXX", pwLines[0]);
+		if (connectionUrl.contains(pwLines[0])==false) throw new IOException ("Failed to find and or replace XXXXXXXXXX in "+ connectionUrl);
+	}
 
 	private void loadSupportedWorkflows() throws Exception {
 		Util.pl("\nParsing Supported Organisms and Library Preps...");
@@ -457,7 +471,7 @@ Util.sendEmail(subject, adminEmail, sb.toString());
 				"\n  adminEmail\t"+ adminEmail+
 				"\n  hoursToWait\t"+ hoursToWait+
 				"\n  verbose\t"+verbose+
-				"\n  connectionUrl\tSee config file"+
+				"\n  connectionUrl\t"+ connectionUrl+
 				"\n  experimentDirString\t"+ experimentDirString+
 				"\n  experimentLinkUrl\t"+ experimentLinkUrl+
 				"\n  experimentRequestsToProc\t"+ experimentRequestsToProc+

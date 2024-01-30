@@ -1,0 +1,71 @@
+# Key TAB Value configuration file for the GNomEx and Chpc AutoAnalysis daemons
+# Last Edit 30Jan2024 - david.nix@hci.utah.edu
+
+########## GNomExAutoAnalysis Specific ###########
+
+# Connection URL for establishing a connection to the main GNomEx DB
+	# e.g. jdbc:sqlserver://hci-db.hci.utah.edu:1433;databaseName=gnomex;user=pipeline;password=XXXXXXXXXX;encrypt=true;trustServerCertificate=true
+	# Must contain 'XXXXXXXXXX'. This will be replaced with the pwd in the cred.txt file, see https://ri-confluence.hci.utah.edu/pages/viewpage.action?pageId=38076459
+connectionUrl	jdbc:sqlserver://hci-db.hci.utah.edu:1433;databaseName=gnomex;user=pipeline;password=XXXXXXXXXX;encrypt=true;trustServerCertificate=true
+
+# Full path to the repo containing Experiment Requests organized by year
+	# experimentDir	/home/tomatosrvs/AutoAnalysis/Test/MockRepo
+experimentDir	/Repository/MicroarrayData/
+
+# GNomEx experiment link/ sharing URL, this will be appended with particular Experiment Request ID, e.g. 14288R1
+experimentLinkUrl	https://hci-bio-app.hci.utah.edu/gnomex/?requestNumber=
+
+# Jira help request Url, this will be inserted into client email notifications
+jiraUrl	https://uofuhealth.utah.edu/huntsman/shared-resources/gcb/cbi/help-requests
+
+# Data policy page Url
+dataPolicyUrl	https://uofuhealth.utah.edu/huntsman/shared-resources/gcb/cbi/data-access-storage
+
+# For testing just one Experiment Request, the GNomExAutoAnalysis will only process this request
+	# set to all or an actual xxxxxR ID
+testRequest	all
+	#testRequest	22680R
+
+# Supported organisms library prep configuration file
+supportedOrgLibWfConfigFile	/home/tomatosrvs/AutoAnalysis/Test/autoAnalysis.wf.config.txt
+
+# Path to the USeq JobCleaner app. This is called after running MultiQC on each Job directory to reduce the number of small files
+useqJobCleaner	/home/tomatosrvs/AutoAnalysis/Test/USeq/Apps/JobCleaner
+
+########## Used by Both ###########
+
+# HCI link/ staging directory
+	# GNomExAutoAnalysis creates Analysis dirs in each Experiment Request, soft links in the paired fastq files, and then soft links each directory into this job staging directory.
+	# The ChpcAutoAnalysis daemon on CHPC will be searching this directory for Analysis jobs with a RUNME file (but no COMPLETE file) to copy over and submit to the redwood cluster. 
+	# The GNomExAutoAnalysis scans these soft linked directories for a COMPLETE file and then deletes the soft link leaving the finished dir in the Experiment Request.
+hciLinkDirectory	/home/tomatosrvs/AutoAnalysis/Test/Jobs4CHPC/
+
+# Email address to send updates and issues
+adminEmail	david.nix@hci.utah.edu
+
+# Time to wait for each daemon launch cycle, set to 0 to run and exit, doubles OK
+hoursToWait	6
+
+
+########## ChpcAutoAnalysis Specific ###########
+
+# HCI userName@serverIP for executing cmds from CHPC to HCI for ssh and 
+hciUserNameIp	tomatosrvs@hci-bio4.hci.utah.edu
+
+# CHPC job directory, the ChpcAutoAnalysis daemon on CHPC will be executing slurm jobs in this directory  
+	# Analysis jobs with a RUNME file to copied over
+chpcJobDirectory	/scratch/general/pe-nfs1/hcipepipeline/AutoAnalysis/Jobs
+
+# CHPC temporary directory, used to write shell scripts to lauch slurm jobs
+chpcTempDirectory	/uufs/chpc.utah.edu/common/HIPAA/hcipepipeline/AutoAnalysis/Test/TempDir
+
+# CHPC slurm info, the truncated user name as displayed in a sbatch output
+slurmPartiton	hci-rw
+slurmUserTruncated	hcipepip
+
+# Number of simultaneous rsync transfers, slurm job submissions
+maxProcessingThreads	2
+
+
+
+
